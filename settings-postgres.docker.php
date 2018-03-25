@@ -10,7 +10,7 @@ $databases = array(
       'password' => 'drupal',
       'host' => 'postgres',
       'port' => '5432',
-      'driver' => 'psql',
+      'driver' => 'pgsql',
       'prefix' => '',
     ),
   ),
