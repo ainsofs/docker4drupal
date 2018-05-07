@@ -61,8 +61,8 @@ The Drupal stack consist of the following containers:
 | Mailhog       | latest             | `mailhog`       | [mailhog/mailhog]                  | ✓                  |
 | Adminer       | 4.3                | `adminer`       | [wodby/adminer]                    |                    |
 | phpMyAdmin    | latest             | `pma`           | [phpmyadmin/phpmyadmin]            |                    |
-| Portainer     | latest             | `portainer`     | [portainer/portainer]              | ✓                  |
-| Traefik       | latest             | `traefik`       | [_/traefik]                        | ✓                  |
+| Portainer     | latest             | `portainer`     | [portainer/portainer]              |                    |
+| Traefik       | latest             | `traefik`       | [_/traefik]                        |                    |
 
 Supported Drupal versions: 8 / 7 / 6
 
