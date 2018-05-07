@@ -19,7 +19,7 @@ services:
     container_name: "${PROJECT_NAME}_php"
     environment:
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
-#      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S opensmtpd:25      
+#      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S opensmtpd:25
       DB_HOST: $DB_HOST
       DB_USER: $DB_USER
       DB_PASSWORD: $DB_PASSWORD
@@ -64,7 +64,10 @@ services:
 # For macOS users (https://wodby.com/stacks/drupal/docs/local/docker-for-mac/)
 #      - ./:/var/www/html:cached # User-guided caching
 #      - docker-sync:/var/www/html # Docker-sync
+    ports:
+      - 8000:80
     labels:
+#      - 'traefik.backend=nginx'
       - 'traefik.backend=${PROJECT_NAME}_nginx'
       - 'traefik.port=80'
       - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
@@ -250,40 +253,23 @@ services:
 #      - 'traefik.port=5601'
 #      - 'traefik.frontend.rule=Host:kibana.php.docker.localhost'
 
-#  opensmtpd:
-#    container_name: "${PROJECT_NAME}_opensmtpd"
-#    image: wodby/opensmtpd:$OPENSMTPD_TAG
-
-#  xhprof:
-#    image: wodby/xhprof:$XHPROF_TAG
-#    restart: always
+#  portainer:
+#    image: portainer/portainer
+#    container_name: "${PROJECT_NAME}_portainer"
+#    command: --no-auth -H unix:///var/run/docker.sock
 #    volumes:
-#      - files:/mnt/files
+#      - /var/run/docker.sock:/var/run/docker.sock
 #    labels:
-#      - 'traefik.backend=${PROJECT_NAME}_xhprof'
-#      - 'traefik.port=8080'
-#      - 'traefik.frontend.rule=Host:xhprof.${PROJECT_BASE_URL}'
+#      - 'traefik.backend=portainer'
+#      - 'traefik.port=9000'
+#      - 'traefik.frontend.rule=Host:portainer.${PROJECT_BASE_URL}'
 
-  portainer:
-    image: portainer/portainer
-    container_name: "${PROJECT_NAME}_portainer"
-    command: --no-auth -H unix:///var/run/docker.sock
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - 'traefik.backend=${PROJECT_NAME}_portainer'
-      - 'traefik.port=9000'
-      - 'traefik.frontend.rule=Host:portainer.${PROJECT_BASE_URL}'
-
-  traefik:
-    image: traefik
-    container_name: "${PROJECT_NAME}_traefik"
-    command: -c /dev/null --web --docker --logLevel=INFO
-    ports:
-      - '8000:80'
-#      - '8080:8080' # Dashboard
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+#  traefik:
+#    image: traefik
+#    container_name: "${PROJECT_NAME}_traefik"
+#    command: -c /dev/null --web --docker --logLevel=INFO
+#    ports:
+#      - '8000:80'
 
 #volumes:
 ## Docker-sync for macOS users
