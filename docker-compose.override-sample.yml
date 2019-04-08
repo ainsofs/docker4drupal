@@ -10,7 +10,8 @@ services:
 
   nginx:
     volumes:
-      - codebase:/var/www/html
+      - ./:/var/www/html
+      - ./settings.docker.php:/var/www/html/web/sites/default/settings.local.php
 
 volumes:
   codebase:
