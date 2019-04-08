@@ -16,6 +16,7 @@ $databases = array(
   ),
 );
 
+## DRUPAL 7 only
 # varnish settings
 #$conf['varnish_version'] = 4;
 #$conf['varnish_control_terminal'] = 'varnish:6082';
@@ -45,3 +46,5 @@ $databases = array(
 #$conf['memcache_extension'] = 'memcached';
 #$conf['memcache_stampede_protection'] = TRUE;
 #$conf['memcache_servers'] = array('memcached:11211' => 'default');
+
+## DRUPAL 8
