@@ -29,6 +29,7 @@ Docker4Drupal is a set of docker images optimized for Drupal. Use `docker-compos
 
 The Drupal stack consist of the following containers:
 
+<<<<<<< HEAD
 | Container       | Versions               | Service name    | Image                              | Default |
 | --------------  | ---------------------- | --------------- | ---------------------------------- | ------- |
 | [Nginx]         | 1.17, 1.16             | `nginx`         | [wodby/nginx]                      | ✓       |
@@ -60,6 +61,40 @@ The Drupal stack consist of the following containers:
 
 Supported Drupal versions: 8 / 7
 
+<<<<<<< HEAD
+=======
+❗️PHP 5.6 [has reached end of life](http://php.net/supported-versions.php) and no longer supported by PHP team. PHP 7.1 is currently in security fix only mode. We strongly advise you to migrate to the latest stable PHP version.   
+=======
+| Container     | Versions           | Service name    | Image                              | Enabled by default |
+| ------------- | ------------------ | ------------    | ---------------------------------- | ------------------ |
+| Nginx         | 1.14, 1.13         | `nginx`         | [wodby/drupal-nginx]               | ✓                  |
+| Apache        | 2.4                | `apache`        | [wodby/php-apache]                 |                    |
+| Drupal        | 8, 7, 6            | `php`           | [wodby/drupal]                     | ✓                  |
+| PHP           | 7.1, 7.0, 5.6, 5.3 | `php`           | [wodby/drupal-php]                 |                    |
+| MariaDB       | 10.2, 10.1         | `mariadb`       | [wodby/mariadb]                    | ✓                  |
+| PostgreSQL    | 10.1, 9.6          | `postgres`      | [wodby/postgres]                   |                    |
+| Redis         | 4.0, 3.2           | `redis`         | [wodby/redis]                      |                    |
+| Varnish       | 4.1                | `varnish`       | [wodby/drupal-varnish]             |                    |
+| Node          | 9, 8               | `node`          | [wodby/node]                       |                    |
+| Drupal node   | 1.0                | `nodejs`        | [wodby/drupal-node]                |                    |
+| Solr          | 7.x, 6.x, 5.5, 5.4 | `solr`          | [wodby/drupal-solr]                |                    |
+| Elasticsearch | 6.x, 5.6, 5.5, 5.4 | `elasticsearch` | [wodby/elasticsearch]              |                    |
+| Kibana        | 6.x, 5.6, 5.5, 5.4 | `kibana`        | [wodby/kibana]                     |                    |
+| Memcached     | 1.4                | `memcached`     | [wodby/memcached]                  |                    |
+| Webgrind      | 1.5                | `webgrind`      | [wodby/webgrind]                   |                    |
+| Blackfire     | latest             | `blackfire`     | [blackfire/blackfire]              |                    |
+| Rsyslog       | latest             | `rsyslog`       | [wodby/rsyslog]                    |                    |
+| AthenaPDF     | 2.10.0             | `athenapdf`     | [arachnysdocker/athenapdf-service] |                    |
+| Mailhog       | latest             | `mailhog`       | [mailhog/mailhog]                  | ✓                  |
+| Adminer       | 4.3                | `adminer`       | [wodby/adminer]                    |                    |
+| phpMyAdmin    | latest             | `pma`           | [phpmyadmin/phpmyadmin]            |                    |
+| Portainer     | latest             | `portainer`     | [portainer/portainer]              |                    |
+| Traefik       | latest             | `traefik`       | [_/traefik]                        |                    |
+
+Supported Drupal versions: 8 / 7 / 6
+>>>>>>> update enabled by default table
+
+>>>>>>> ec126665f2daaa93674fa2b52ea6ba9b24e99adb
 ## Documentation
 
 Full documentation is available at https://wodby.com/docs/stacks/drupal/local.

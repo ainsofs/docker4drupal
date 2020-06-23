@@ -6,12 +6,11 @@ services:
     environment:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      - ./settings.docker.php:/var/www/html/web/sites/default/settings.local.php
+      - codebase:/var/www/html
 
   nginx:
-#    environment:
-#      NGINX_SERVER_ROOT: /var/www/html/web
     volumes:
-      - ./:/var/www/html
-    ports:
-      - '8000:80'
+      - codebase:/var/www/html
+
+volumes:
+  codebase:

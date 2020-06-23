@@ -71,6 +71,8 @@ services:
 # For macOS users (https://wodby.com/docs/stacks/drupal/local#docker-for-mac)
 #      - ./:/var/www/html:cached # User-guided caching
 #      - docker-sync:/var/www/html # Docker-sync
+    ports:
+      - 8000:80
     labels:
       - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`${PROJECT_BASE_URL}`)"
 
@@ -239,15 +241,12 @@ services:
 #      - "traefik.http.services.${PROJECT_NAME}_kibana.loadbalancer.server.port=5601"
 #      - "traefik.http.routers.${PROJECT_NAME}_kibana.rule=Host(`kibana.${PROJECT_BASE_URL}`)"
 
-#  opensmtpd:
-#    container_name: "${PROJECT_NAME}_opensmtpd"
-#    image: wodby/opensmtpd:$OPENSMTPD_TAG
-
-#  xhprof:
-#    image: wodby/xhprof:$XHPROF_TAG
-#    restart: always
+#  portainer:
+#    image: portainer/portainer
+#    container_name: "${PROJECT_NAME}_portainer"
+#    command: --no-auth -H unix:///var/run/docker.sock
 #    volumes:
-#      - files:/mnt/files
+#      - /var/run/docker.sock:/var/run/docker.sock
 #    labels:
 #      - "traefik.http.routers.${PROJECT_NAME}_xhprof.rule=Host(`xhprof.${PROJECT_BASE_URL}`)"
 
