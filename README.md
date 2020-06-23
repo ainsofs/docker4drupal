@@ -10,6 +10,21 @@ Docker4Drupal is a set of docker images optimized for Drupal. Use `docker-compos
 * Ask questions on [Slack](http://slack.wodby.com/)
 * Follow [@wodbycloud](https://twitter.com/wodbycloud) for future announcements
 
+## Setting up dev environment using docker and docker-compose
+
+* Ensure docker and docker-compose is installed on your dev environment
+* Copy docker-compose.override-sample.yml as docker-compose.override.yml
+* Copy .default-env as .env
+* Run ```docker-compose up -d```
+
+**Useful commands**
+
+* ```docker-compose exec php sh``` - to run drush commands
+* ```docker-compose logs -f php``` -  to follow php errors
+* ```drush sqlc < somefile.sql``` - to import sql backup
+* ```gunzip -c somefile.sql.gz | drush sqlc``` - to import a gzipped sql backup
+* ```docker-compose restart``` - if any changes were made to docker configs ie docker-compose.*yml files
+
 ## Stack
 
 The Drupal stack consist of the following containers:
