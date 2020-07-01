@@ -2,15 +2,14 @@ version: "3"
 
 services:
   php:
-    image: wodby/drupal:$DRUPAL_TAG
+    image: wodby/drupal-php:$PHP_TAG
     environment:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      - codebase:/var/www/html
-
+      - ./:/var/www/html
+      - ./settings.docker.php:/var/www/html/web/sites/default/settings.local.php
   nginx:
+    ports:
+      - '8000:80'
     volumes:
-      - codebase:/var/www/html
-
-volumes:
-  codebase:
+      - ./:/var/www/html
