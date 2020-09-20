@@ -7,8 +7,8 @@ services:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
       - ./:/var/www/html
-      - ./settings.docker.php:/var/www/html/web/sites/default/settings.local.php
-      - ./docker-init/files/public:/var/www/html/web/sites/default/files
+      - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./docker-init/files/public:/var/www/html/drupal/web/sites/default/files
       - ./docker-init/files/private:/var/www/private
 
   crond:
