@@ -1,15 +1,28 @@
-version: "3"
+version: "3.7"
 
 services:
   php:
-    image: wodby/drupal-php:$PHP_TAG
+    # image: wodby/drupal:$DRUPAL_TAG
     environment:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
       - ./:/var/www/html
       - ./settings.docker.php:/var/www/html/web/sites/default/settings.local.php
+      - ./docker-init/files/public:/var/www/html/web/sites/default/files
+      - ./docker-init/files/private:/var/www/private
+
+  crond:
+    # image: wodby/drupal:$DRUPAL_TAG
+    environment:
+      PHP_FPM_CLEAR_ENV: "no"
+    volumes:
+      - ./:/var/www/html
+
   nginx:
     ports:
       - '8000:80'
     volumes:
       - ./:/var/www/html
+
+# volumes:
+#   codebase:
