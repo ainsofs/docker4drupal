@@ -14,9 +14,13 @@ services:
   crond:
     # image: wodby/drupal:$DRUPAL_TAG
     environment:
+      CRONTAB: "0 * * * * drush -r /var/www/html/drupal/docroot cron"
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
       - ./:/var/www/html
+      - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./docker-init/files/public:/var/www/html/drupal/web/sites/default/files
+      - ./docker-init/files/private:/var/www/private
 
   nginx:
     ports:
