@@ -4,63 +4,16 @@
 
 ## Introduction
 
-Docker4Drupal is a set of docker images optimized for Drupal. Use `docker-compose.yml` file from the [latest stable release](https://github.com/wodby/docker4drupal/releases) to spin up local environment on Linux, Mac OS X and Windows.
+Docker4Drupal is a set of docker images optimized for Drupal. Use `docker-compose.yml` file from the [latest stable release](https://github.com/wodby/docker4drupal/releases) to spin up local environment on Linux, Mac OS X and Windows. 
 
 * Read the docs on [**how to use**](https://wodby.com/docs/stacks/drupal/local#usage)
 * Ask questions on [Slack](http://slack.wodby.com/)
 * Follow [@wodbycloud](https://twitter.com/wodbycloud) for future announcements
 
-## Setting up dev environment using docker and docker-compose
-
-* Ensure docker and docker-compose is installed on your dev environment
-* Copy docker-compose.override-sample.yml as docker-compose.override.yml
-* Run ```docker-compose up -d```
-
-**Useful commands**
-
-* ```docker-compose exec php sh``` - to run drush commands
-* ```docker-compose logs -f php``` -  to follow php errors
-* ```drush sqlc < somefile.sql``` - to import sql backup
-* ```gunzip -c somefile.sql.gz | drush sqlc``` - to import a gzipped sql backup
-* ```docker-compose restart``` - if any changes were made to docker configs ie docker-compose.*yml files
-
 ## Stack
 
 The Drupal stack consist of the following containers:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-| Container       | Versions               | Service name    | Image                              | Default |
-| --------------  | ---------------------- | --------------- | ---------------------------------- | ------- |
-| [Nginx]         | 1.19, 1.18             | `nginx`         | [wodby/nginx]                      | ✓       |
-| [Apache]        | 2.4                    | `apache`        | [wodby/apache]                     |         |
-| [Drupal]        | 9, 8, 7                | `php`           | [wodby/drupal]                     | ✓       |
-| [PHP]           | 7.4, 7.3, 7.2          | `php`           | [wodby/drupal-php]                 |         |
-| Crond           |                        | `crond`         | [wodby/drupal-php]                 | ✓       |
-| [MariaDB]       | 10.5, 10.4, 10.3, 10.2 | `mariadb`       | [wodby/mariadb]                    | ✓       |
-| [PostgreSQL]    | 12, 11, 10, 9.x        | `postgres`      | [wodby/postgres]                   |         |
-| [Redis]         | 6, 5                   | `redis`         | [wodby/redis]                      |         |
-| [Memcached]     | 1                      | `memcached`     | [wodby/memcached]                  |         |
-| [Varnish]       | 6.0, 4.1               | `varnish`       | [wodby/varnish]                    |         |
-| [Node.js]       | 14, 12, 10             | `node`          | [wodby/node]                       |         |
-| [Drupal node]   | 1.0                    | `drupal-node`   | [wodby/drupal-node]                |         |
-| [Solr]          | 8, 7, 6, 5             | `solr`          | [wodby/solr]                       |         |
-| [Elasticsearch] | 7, 6                   | `elasticsearch` | [wodby/elasticsearch]              |         |
-| [Kibana]        | 7, 6                   | `kibana`        | [wodby/kibana]                     |         |
-| [OpenSMTPD]     | 6.0                    | `opensmtpd`     | [wodby/opensmtpd]                  |         |
-| [Mailhog]       | latest                 | `mailhog`       | [mailhog/mailhog]                  | ✓       |
-| [AthenaPDF]     | 2.10.0                 | `athenapdf`     | [arachnysdocker/athenapdf-service] |         |
-| [Rsyslog]       | latest                 | `rsyslog`       | [wodby/rsyslog]                    |         |
-| [Blackfire]     | latest                 | `blackfire`     | [blackfire/blackfire]              |         |
-| [Webgrind]      | 1                      | `webgrind`      | [wodby/webgrind]                   |         |
-| [Xhprof viewer] | latest                 | `xhprof`        | [wodby/xhprof]                     |         |
-| Adminer         | 4.6                    | `adminer`       | [wodby/adminer]                    |         |
-| phpMyAdmin      | latest                 | `pma`           | [phpmyadmin/phpmyadmin]            |         |
-| Selenium chrome | 3.141                  | `chrome`        | [selenium/standalone-chrome]       |         |
-| Portainer       | latest                 | `portainer`     | [portainer/portainer]              | ✓       |
-| Traefik         | latest                 | `traefik`       | [_/traefik]                        | ✓       |
-
-=======
 | Container       | Versions               | Image                              | ARM64 support | Enabled by default |
 | --------------- | ---------------------- | ---------------------------------- | ------------- | ------------------ |
 | [Nginx]         | 1.20, 1.19             | [wodby/nginx]                      | ✓             | ✓                  |
@@ -90,43 +43,8 @@ The Drupal stack consist of the following containers:
 | Selenium chrome | 3.141                  | [selenium/standalone-chrome]       |               |                    |
 | Traefik         | latest                 | [_/traefik]                        | ✓             | ✓                  |
  
->>>>>>> master
 Supported Drupal versions: 9 / 8 / 7
 
-<<<<<<< HEAD
-=======
-❗️PHP 5.6 [has reached end of life](http://php.net/supported-versions.php) and no longer supported by PHP team. PHP 7.1 is currently in security fix only mode. We strongly advise you to migrate to the latest stable PHP version.
-=======
-| Container     | Versions           | Service name    | Image                              | Enabled by default |
-| ------------- | ------------------ | ------------    | ---------------------------------- | ------------------ |
-| Nginx         | 1.14, 1.13         | `nginx`         | [wodby/drupal-nginx]               | ✓                  |
-| Apache        | 2.4                | `apache`        | [wodby/php-apache]                 |                    |
-| Drupal        | 8, 7, 6            | `php`           | [wodby/drupal]                     | ✓                  |
-| PHP           | 7.1, 7.0, 5.6, 5.3 | `php`           | [wodby/drupal-php]                 |                    |
-| MariaDB       | 10.2, 10.1         | `mariadb`       | [wodby/mariadb]                    | ✓                  |
-| PostgreSQL    | 10.1, 9.6          | `postgres`      | [wodby/postgres]                   |                    |
-| Redis         | 4.0, 3.2           | `redis`         | [wodby/redis]                      |                    |
-| Varnish       | 4.1                | `varnish`       | [wodby/drupal-varnish]             |                    |
-| Node          | 9, 8               | `node`          | [wodby/node]                       |                    |
-| Drupal node   | 1.0                | `nodejs`        | [wodby/drupal-node]                |                    |
-| Solr          | 7.x, 6.x, 5.5, 5.4 | `solr`          | [wodby/drupal-solr]                |                    |
-| Elasticsearch | 6.x, 5.6, 5.5, 5.4 | `elasticsearch` | [wodby/elasticsearch]              |                    |
-| Kibana        | 6.x, 5.6, 5.5, 5.4 | `kibana`        | [wodby/kibana]                     |                    |
-| Memcached     | 1.4                | `memcached`     | [wodby/memcached]                  |                    |
-| Webgrind      | 1.5                | `webgrind`      | [wodby/webgrind]                   |                    |
-| Blackfire     | latest             | `blackfire`     | [blackfire/blackfire]              |                    |
-| Rsyslog       | latest             | `rsyslog`       | [wodby/rsyslog]                    |                    |
-| AthenaPDF     | 2.10.0             | `athenapdf`     | [arachnysdocker/athenapdf-service] |                    |
-| Mailhog       | latest             | `mailhog`       | [mailhog/mailhog]                  | ✓                  |
-| Adminer       | 4.3                | `adminer`       | [wodby/adminer]                    |                    |
-| phpMyAdmin    | latest             | `pma`           | [phpmyadmin/phpmyadmin]            |                    |
-| Portainer     | latest             | `portainer`     | [portainer/portainer]              |                    |
-| Traefik       | latest             | `traefik`       | [_/traefik]                        |                    |
-
-Supported Drupal versions: 8 / 7 / 6
->>>>>>> update enabled by default table
-
->>>>>>> ec126665f2daaa93674fa2b52ea6ba9b24e99adb
 ## Documentation
 
 Full documentation is available at https://wodby.com/docs/stacks/drupal/local.
@@ -135,7 +53,7 @@ Full documentation is available at https://wodby.com/docs/stacks/drupal/local.
 
 Images tags format is `[VERSION]-[STABILITY_TAG]` where:
 
-`[VERSION]` is the _version of an application_ (without patch version) running in a container, e.g. `wodby/nginx:1.15-x.x.x` where Nginx version is `1.15` and `x.x.x` is a stability tag. For some images we include both major and minor version like PHP `7.2`, for others we include only major like Redis `5`.
+`[VERSION]` is the _version of an application_ (without patch version) running in a container, e.g. `wodby/nginx:1.15-x.x.x` where Nginx version is `1.15` and `x.x.x` is a stability tag. For some images we include both major and minor version like PHP `7.2`, for others we include only major like Redis `5`. 
 
 `[STABILITY_TAG]` is the _version of an image_ that corresponds to a git tag of the image repository, e.g. `wodby/mariadb:10.2-3.3.8` has MariaDB `10.2` and stability tag [`3.3.8`](https://github.com/wodby/mariadb/releases/tag/3.3.8). New stability tags include patch updates for applications and image's fixes/improvements (new env vars, orchestration actions fixes, etc). Stability tag changes described in the corresponding a git tag description. Stability tags follow [semantic versioning](https://semver.org/).
 
