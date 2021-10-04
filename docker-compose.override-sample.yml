@@ -7,9 +7,9 @@ services:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
       - ./:/var/www/html
-      - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
-      - ./docker-init/files/public:/var/www/html/drupal/web/sites/default/files
-      - ./docker-init/files/private:/var/www/private
+      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./docker-init/files/public:/mnt/files/public
+      - ./docker-init/files/private:/mnt/files/private
 
   crond:
     # image: wodby/drupal:$DRUPAL_TAG
@@ -18,9 +18,9 @@ services:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
       - ./:/var/www/html
-      - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
-      - ./docker-init/files/public:/var/www/html/drupal/web/sites/default/files
-      - ./docker-init/files/private:/var/www/private
+      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./docker-init/files/public:/mnt/files/public
+      - ./docker-init/files/private:/mnt/files/private
 
   nginx:
     ports:

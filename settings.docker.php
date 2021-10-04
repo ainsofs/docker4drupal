@@ -49,7 +49,7 @@ $config['system.logging']['error_level'] = 'verbose';
  * See https://www.drupal.org/documentation/modules/file for more information
  * about securing private files.
  */
-$settings['file_private_path'] = '/var/www/private';
+// $settings['file_private_path'] = '/var/www/private';
 
 
 /**
