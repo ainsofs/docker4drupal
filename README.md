@@ -16,7 +16,7 @@ The Drupal stack consist of the following containers:
 
 | Container       | Versions               | Image                              | ARM64 support | Enabled by default |
 | --------------- | ---------------------- | ---------------------------------- | ------------- | ------------------ |
-| [Nginx]         | 1.20, 1.19             | [wodby/nginx]                      | ✓             | ✓                  |
+| [Nginx]         | 1.21, 1.20, 1.19       | [wodby/nginx]                      | ✓             | ✓                  |
 | [Apache]        | 2.4                    | [wodby/apache]                     | ✓             |                    |
 | [Drupal]        | 9, 8, 7                | [wodby/drupal]                     | ✓             | ✓                  |
 | [PHP]           | 8.0, 7.4, 7.3          | [wodby/drupal-php]                 | ✓             |                    |
@@ -26,7 +26,7 @@ The Drupal stack consist of the following containers:
 | [Redis]         | 6, 5                   | [wodby/redis]                      | ✓             |                    |
 | [Memcached]     | 1                      | [wodby/memcached]                  |               |                    |
 | [Varnish]       | 6.0, 4.1               | [wodby/varnish]                    |               |                    |
-| [Node.js]       | 14, 12, 10             | [wodby/node]                       |               |                    |
+| [Node.js]       | 16, 14, 12             | [wodby/node]                       |               |                    |
 | [Drupal node]   | 1.0                    | [wodby/drupal-node]                |               |                    |
 | [Solr]          | 8, 7, 6, 5             | [wodby/solr]                       |               |                    |
 | [Elasticsearch] | 7, 6                   | [wodby/elasticsearch]              |               |                    |
@@ -49,7 +49,7 @@ Supported Drupal versions: 9 / 8 / 7
 
 Full documentation is available at https://wodby.com/docs/stacks/drupal/local.
 
-## Images' tags
+## Image's tags
 
 Images tags format is `[VERSION]-[STABILITY_TAG]` where:
 
