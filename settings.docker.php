@@ -12,7 +12,7 @@ $databases['default']['default'] = array(
 
 ## DRUPAL 8
 $settings['trusted_host_patterns'] = array(
-  '\.localhost$', '\.local$', '\.loc$'
+  '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx'
 );
 
 // For Redis

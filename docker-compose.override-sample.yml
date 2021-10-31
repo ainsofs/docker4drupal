@@ -8,8 +8,7 @@ services:
     volumes:
       - ./:/var/www/html
       # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
-      - ./docker-init/files/public:/mnt/files/public
-      - ./docker-init/files/private:/mnt/files/private
+      - ./docker-init/files/:/mnt/files
 
   crond:
     # image: wodby/drupal:$DRUPAL_TAG
@@ -19,8 +18,7 @@ services:
     volumes:
       - ./:/var/www/html
       # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
-      - ./docker-init/files/public:/mnt/files/public
-      - ./docker-init/files/private:/mnt/files/private
+      - ./docker-init/files/:/mnt/files
 
   nginx:
     ports:
