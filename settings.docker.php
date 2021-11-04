@@ -110,3 +110,17 @@ $config['system.site']['name'] = "DEV ENVIRONMENT";
 $_env_is_live = FALSE;
 $config['config_split.config_split.dev']['status'] = !$_env_is_live;
 $config['config_split.config_split.live']['status'] = $_env_is_live;
+
+/**
+ * Connect to Azure SSO
+ */
+//$config['openid_connect.settings.windows_aad']['settings']['client_id'] = '90eeb306-9e30-4fab-a1c1-327f013b7249';
+//$config['openid_connect.settings.windows_aad']['settings']['client_secret'] = getenv('SSO_CLIENT_SECRET'); // In Prod, set this via wodby.
+//$config['openid_connect.settings.windows_aad']['settings']['authorization_endpoint_wa'] = 'https://login.microsoftonline.com/1b892310-cd08-4f86-8b97-4805b93e7397/oauth2/authorize';
+//$config['openid_connect.settings.windows_aad']['settings']['token_endpoint_wa'] = 'https://login.microsoftonline.com/1b892310-cd08-4f86-8b97-4805b93e7397/oauth2/token';
+
+// Disables the openid connect login process so that tests run with normal login process.
+// $config['openid_connect.settings']['user_login_display'] = 'hidden';
+
+// Google anlytics
+// $config['google_analytics.settings']['account'] = isset($_SERVER['GA']) ? $_SERVER['GA'] : 'UA-xxxxxxx-xx';
