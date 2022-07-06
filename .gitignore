@@ -30,4 +30,4 @@ docker-init/files
 errors.log
 .docker-sync/
 mutagen.yml.lock
-
+.vscode
