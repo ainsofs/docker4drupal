@@ -34,6 +34,8 @@ services:
 #      # Read instructions at https://wodby.com/docs/stacks/php/local/#xdebug
 #      PHP_XDEBUG: 1
 #      PHP_XDEBUG_MODE: debug
+#      PHP_XDEBUG_MODE: profile
+#      PHP_XDEBUG_USE_COMPRESSION: false
 #      PHP_IDE_CONFIG: serverName=my-ide
 #      PHP_XDEBUG_IDEKEY: "my-ide"
 #      PHP_XDEBUG_CLIENT_HOST: 172.17.0.1 # Linux
@@ -56,7 +58,7 @@ services:
     container_name: "${PROJECT_NAME}_crond"
     environment:
       CRONTAB: "0 * * * * drush -r /var/www/html/web cron"
-    command: sudo -E LD_PRELOAD=/usr/lib/preloadable_libiconv.so crond -f -d 0
+    command: sudo -E crond -f -d 0
     volumes:
     - ./:/var/www/html:cached
 ## Alternative for macOS users: Mutagen https://wodby.com/docs/stacks/drupal/local#docker-for-mac
@@ -221,13 +223,6 @@ services:
 #    - ./:/var/www/html
 #    command: sh -c 'yarn install && yarn run start'
 
-#  blackfire:
-#    image: blackfire/blackfire
-#    container_name: "${PROJECT_NAME}_blackfire"
-#    environment:
-#      BLACKFIRE_SERVER_ID: XXXXX
-#      BLACKFIRE_SERVER_TOKEN: YYYYY
-
 #  webgrind:
 #    image: wodby/webgrind:$WEBGRIND_TAG
 #    container_name: "${PROJECT_NAME}_webgrind"
@@ -237,6 +232,7 @@ services:
 #    - "traefik.http.routers.${PROJECT_NAME}_webgrind.rule=Host(`webgrind.${PROJECT_BASE_URL}`)"
 #    volumes:
 #    - files:/mnt/files
+#    - ./:/mnt/codebase:cached
 
 #  elasticsearch:
 #    image: wodby/elasticsearch:$ELASTICSEARCH_TAG
@@ -312,8 +308,8 @@ services:
 #          defaultOwner: "id:501"
 #          defaultGroup: "id:20"
 
-#volumes:
+volumes:
 ## For macOS users (Mutagen)
 #  drupal:
-## For Xdebug profiler
-#  files:
+# For Xdebug profiler
+  files:
