@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   mariadb:
     image: wodby/mariadb:$MARIADB_TAG
@@ -10,6 +8,7 @@ services:
       MYSQL_DATABASE: $DB_NAME
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_TRANSACTION_ISOLATION: READ-COMMITTED
 #    volumes:
 #      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
 #      - /path/to/mariadb/data/on/host:/var/lib/mysql # Use bind mount
@@ -18,9 +17,17 @@ services:
     image: wodby/drupal-php:$PHP_TAG
     container_name: "${PROJECT_NAME}_php"
     environment:
-      SSMTP_MAILHUB: mailhog:1025
-#      SSMTP_MAILHUB: opensmtpd:25
-      PHP_SENDMAIL_PATH: '"/usr/bin/dos2unix -u | /usr/sbin/ssmtp -t -f"'
+      # PHP 8.2+ supports "PHP_MAIL_MIXED_LF_AND_CRLF=On" and does not need dos2unix workaround.
+      PHP_MAIL_MIXED_LF_AND_CRLF: On
+      PHP_SENDMAIL_PATH: '/usr/bin/msmtp -t'
+#     # PHP 8.1 and previous version require dos2unix workaround.
+#      PHP_SENDMAIL_PATH: '"/usr/bin/dos2unix -u | /usr/bin/msmtp -t"'
+      # Mailhog:
+      MSMTP_HOST: mailhog
+      MSMTP_PORT: 1025
+#      # OpenSMTPD:
+#      MSMTP_HOST: opensmtpd
+#      MSMTP_PORT: 25
 #      DB_HOST: $DB_HOST
 #      DB_PORT: $DB_PORT
 #      DB_USER: $DB_USER
@@ -54,6 +61,7 @@ services:
 #    - files:/mnt/files
 
   crond:
+    init: true
     image: wodby/drupal-php:$PHP_TAG
     container_name: "${PROJECT_NAME}_crond"
     environment:
@@ -142,6 +150,7 @@ services:
 
 #  adminer:
 #    container_name: "${PROJECT_NAME}_adminer"
+#    init: true
 #    image: wodby/adminer:$ADMINER_TAG
 #    environment:
 #      # For PostgreSQL:
