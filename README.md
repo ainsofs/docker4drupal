@@ -1,79 +1,65 @@
-# Docker-based Drupal stack
+# Enter Project name
 
-[![Build Status](https://github.com/wodby/docker4drupal/workflows/Run%20tests/badge.svg)](https://github.com/wodby/docker4drupal/actions)
+Enter project description - This is starter template for drupal 9 development.
 
-## Introduction
+## Dev environment with [docker4drupal](https://github.com/wodby/docker4drupal/releases)
 
-Docker4Drupal is a set of docker images optimized for Drupal. Use
-`compose.yml` file from the [latest stable release](https://github.com/wodby/docker4drupal/releases) to spin up local environment on Linux, Mac OS X and Windows.
+When starting for the first time copy the override-sample file and update as
+needed
 
-* Read the docs on [**how to use**](https://wodby.com/docs/stacks/drupal/local#usage)
-* Ask questions on [Discord](http://discord.wodby.com/)
-* Ask questions on [Slack](http://slack.wodby.com/)
-* Follow [@wodbycloud](https://twitter.com/wodbycloud) for future announcements
+```
+cp docker-compose.override-sample.yml docker-compose.override.yml
+```
 
-## Stack
+Also update the .env file with your project name. Then start up docker-compose
 
-The Drupal stack consists of the following containers:
+```
+docker-compose up -d
+```
 
-| Container             | Versions                | Image                                     | ARM64 support | Enabled by default |
-|-----------------------|-------------------------|-------------------------------------------|---------------|--------------------|
-| [Nginx]               | 1.31, 1.30              | [wodby/nginx]                             | ✓             | ✓                  |
-| [Apache]              | 2.4                     | [wodby/apache]                            | ✓             |                    |
-| Drupal CMS            | 2                       | [wodby/drupal-cms]                        | ✓             | ✓                  |
-| Vanilla Drupal        | 11, 10                  | [wodby/drupal]                            | ✓             |                    |
-| [PHP]                 | 8.5, 8.4, 8.3, 8.2      | [wodby/drupal-php]                        | ✓             |                    |
-| Crond                 |                         | [wodby/drupal-php]                        | ✓             | ✓                  |
-| [MariaDB]             | 11.8, 11.4, 10.11, 10.6 | [wodby/mariadb]                           | ✓             | ✓                  |
-| [PostgreSQL]          | 18, 17, 16, 15, 14      | [wodby/postgres]                          | ✓             |                    |
-| [Valkey]              | 9.0, 8.1, 8.0, 7        | [wodby/valkey]                            | ✓             |                    |
-| [Redis]               | 8.6, 8.4, 8.2, 7.4      | [wodby/redis]                             | ✓             |                    |
-| [Memcached]           | 1.6                     | [wodby/memcached]                         | ✓             |                    |
-| Vynil ([Varnish])     | 8.0, 6.0                | [wodby/vinyl]                             | ✓             |                    |
-| [Node.js]             | 24, 22, 20              | [wodby/node]                              | ✓             |                    |
-| [Solr]                | 9                       | [wodby/solr]                              | ✓             |                    |
-| Zookeeper             | 3                       | [wodby/zookeeper]                         | ✓             |                    |
-| OpenSearch            | 2                       | [opensearchproject/opensearch]            | ✓             |                    |
-| OpenSearch Dashboards | 2                       | [opensearchproject/opensearch-dashboards] | ✓             |                    |
-| [OpenSMTPD]           | 7                       | [wodby/opensmtpd]                         | ✓             |                    |
-| Mailpit               | latest                  | [axllent/mailpit]                         | ✓             | ✓                  |
-| Gotenberg             | latest                  | [gotenberg/gotenberg]                     | ✓             |                    |
-| [Rsyslog]             | latest                  | [wodby/rsyslog]                           | ✓             |                    |
-| [Webgrind]            | 1                       | [wodby/webgrind]                          | ✓             |                    |
-| [Xhprof viewer]       | latest                  | [wodby/xhprof]                            | ✓             |                    |
-| Adminer               | 5                       | [wodby/adminer]                           | ✓             |                    |
-| phpMyAdmin            | latest                  | [phpmyadmin/phpmyadmin]                   |               |                    |
-| Selenium chrome       | 3.141                   | [selenium/standalone-chrome]              |               |                    |
-| Traefik               | latest                  | [_/traefik]                               | ✓             | ✓                  |
+Then install the [drupal application](https://github.com/drupal/recommended-project)
+into the drupal folder. Note this project is set up to work with the webroot in
+the drupal/web folder. If you use another folder pls update the
+NGINX_SERVER_ROOT section in the docker-compose.override.yml file. You can use
+the settings.default.php as an option for your settings.php file. This file will
+be committed and will define the base configs for all environments.
 
-## Documentation
+```
+cp settings.default.php drupal/web/sites/default/settings.php
+```
 
-Full documentation is available at https://wodby.com/docs/stacks/drupal/local.
+The settings.docker.php file will map into the docker environment as a
+settings.local.php file for environment specific configs. This is a good place
+to put sensitive configs (not for commiting to git) such as passwords. On
+production you can create a settings.local.php and override the configs.
 
-## Image's tags
+Once installed you can access the dev site on port 8000. e.g. localhost:8000
 
-Images' tags format is `[VERSION]-[STABILITY_TAG]` where:
+**Common commands**
 
 `[VERSION]` is the _version of an application_ (without patch version) running in a container, e.g.
 `wodby/nginx:1.31-x.x.x` where Nginx version is `1.31` and
 `x.x.x` is a stability tag. For some images we include both major and minor version like PHP
 `7.2`, for others we include only major like Valkey `7`.
 
-`[STABILITY_TAG]` is the _version of an image_ that corresponds to a git tag of the image repository, e.g.
-`wodby/mariadb:10.2-3.3.8` has MariaDB `10.2` and stability tag [
-`3.3.8`](https://github.com/wodby/mariadb/releases/tag/3.3.8). New stability tags include patch updates for applications and image's fixes/improvements (new env vars, orchestration actions fixes, etc). Stability tag changes described in the corresponding a git tag description. Stability tags follow [semantic versioning](https://semver.org/).
+# stop environment
+docker-compose stop
 
-We highly encourage to use images only with stability tags.
+# delete everything and start in a clean environment
+docker-compose down -v
 
-## Maintenance
+# check logs
+docker-compose logs -f
 
-We regularly update images used in this stack and release them together, see [releases page](https://github.com/wodby/docker4drupal/releases) for full changelog and update instructions. Most of routine updates for images and this project performed by [the bot](https://github.com/wodbot) via scripts located at [wodby/images](https://github.com/wodby/images).
+# check logs for specific container
+docker-compose logs -f php
 
-## Beyond local environment
+# log into php container (this will allow use of drush and composer)
+docker-compose exec php sh
 
-Docker4Drupal is a project designed to help you spin up local environment with Docker Compose. If you want to deploy a consistent stack with orchestrations to your own server, check out [Drupal stack](https://wodby.com/stacks/drupal) on Wodby ![](https://www.google.com/s2/favicons?domain=wodby.com).
+```
 
-## Other Docker4x projects
+**Tests**
 
 * [docker4php](https://github.com/wodby/docker4php)
 * [docker4laravel](https://github.com/wodby/docker4laravel)
