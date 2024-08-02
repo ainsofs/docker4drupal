@@ -1,6 +1,5 @@
 services:
   php:
-    # image: wodby/drupal:$DRUPAL_TAG
     environment:
       DB_HOST: $DB_HOST
       DB_PORT: $DB_PORT
@@ -8,28 +7,26 @@ services:
       DB_PASSWORD: $DB_PASSWORD
       DB_NAME: $DB_NAME
       DB_DRIVER: $DB_DRIVER
-      DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:8000"
+      DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:${PROJECT_PORT}"
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      - ./:/var/www/html
-      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      # - ./:/var/www/html
+      - ./settings.docker.php:/var/www/conf/settings.docker.php #this is included via settings.php
+      - ~/.composer/:/home/wodby/.composer/ #composer cache
       - ./docker-init/files/:/mnt/files
 
   crond:
-    # image: wodby/drupal:$DRUPAL_TAG
     environment:
-      CRONTAB: "0 * * * * drush -r /var/www/html/drupal/web cron"
+      CRONTAB: "0 * * * * drush -r ${DRUPAL_ROOT} cron"
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      - ./:/var/www/html
-      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      # - ./:/var/www/html
+      - ./settings.docker.php:/var/www/conf/settings.docker.php #this is included via settings.php
       - ./docker-init/files/:/mnt/files
 
   nginx:
-    ports:
-      - '8000:80'
     environment:
-      NGINX_SERVER_ROOT: /var/www/html/drupal/web
+      NGINX_SERVER_ROOT: ${DRUPAL_ROOT}
     volumes:
       - ./:/var/www/html
 
@@ -40,15 +37,15 @@ services:
 #    - "traefik.http.services.${PROJECT_NAME}_mailhog.loadbalancer.server.port=8025"
 #    - "traefik.http.routers.${PROJECT_NAME}_mailhog.rule=Host(`mailhog.${PROJECT_BASE_URL}`)"
 
-#   traefik:
-#     image: traefik:v2.0
-#     container_name: "${PROJECT_NAME}_traefik"
-#     command: --api.insecure=true --providers.docker
-#     ports:
-#     - '8000:80'
-# #    - '8080:8080' # Dashboard
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
+  traefik:
+    image: traefik:v2.0
+    container_name: "${PROJECT_NAME}_traefik"
+    command: --api.insecure=true --providers.docker
+    ports:
+    - '${PROJECT_PORT}:80'
+#    - '8080:8080' # Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 # volumes:
 #   codebase:

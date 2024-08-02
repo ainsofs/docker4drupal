@@ -22,7 +22,7 @@ ehthumbs.db
 nbproject
 
 # Ignore docker files
-docker-compose.override.yml
+compose.override.yml
 docker-init/files
 mariadb-init
 postgres-init
