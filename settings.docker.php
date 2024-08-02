@@ -15,6 +15,8 @@ $settings['trusted_host_patterns'] = array(
   '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx'
 );
 
+$settings['state_cache'] = TRUE;
+
 // For Redis
 // $settings['redis.connection']['host'] = 'redis';
 // $settings['redis.connection']['port'] = '6379';
