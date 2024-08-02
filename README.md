@@ -4,17 +4,26 @@ Enter project description - This is starter template for drupal 9 development.
 
 ## Dev environment with [docker4drupal](https://github.com/wodby/docker4drupal/releases)
 
-When starting for the first time copy the override-sample file and update as
-needed
+When starting for the first time copy the override-sample file and update as needed
 
 ```
-cp docker-compose.override-sample.yml docker-compose.override.yml
+cp compose.override-sample.yml compose.override.yml
 ```
 
 Also update the .env file with your project name. Then start up docker-compose
 
 ```
 docker-compose up -d
+
+# OR
+
+make up
+```
+
+You may like to copy the sample README instead of using this one in your new project
+
+```
+cp README-sample.md README.md
 ```
 
 Then install the [drupal application](https://github.com/drupal/recommended-project)
@@ -43,19 +52,19 @@ Once installed you can access the dev site on port 8000. e.g. localhost:8000
 `7.2`, for others we include only major like Valkey `7`.
 
 # stop environment
-docker-compose stop
+docker compose stop #OR make stop
 
 # delete everything and start in a clean environment
-docker-compose down -v
+docker compose down -v #OR make down
 
 # check logs
-docker-compose logs -f
+docker compose logs -f #OR make logs
 
 # check logs for specific container
-docker-compose logs -f php
+docker compose logs -f php #OR make logs php
 
 # log into php container (this will allow use of drush and composer)
-docker-compose exec php sh
+docker compose exec php sh #OR make shell
 
 ```
 
