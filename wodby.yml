@@ -1,7 +1,7 @@
 pipeline:
   - name: Remove composer dev packages
     type: command
-    command: composer install --no-dev
+    command: composer install --no-dev --optimize-autoloader
     directory: $APP_ROOT/drupal
   - name: Clear cache
     type: command
@@ -10,4 +10,8 @@ pipeline:
   - name: Apply database updates
     type: command
     command: drush updb -y
+    directory: $HTTP_ROOT
+  - name: Import configs
+    type: command
+    command: drush cim -y
     directory: $HTTP_ROOT

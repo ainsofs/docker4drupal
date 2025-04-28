@@ -1,0 +1,118 @@
+image: docker:25-git
+
+services:
+  - docker:25-dind
+
+stages:
+  - build
+  - validate
+  - test
+
+# Cache definition
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .composer/cache
+    - drupal/vendor
+    - drupal/web/core
+    - drupal/web/*/contrib
+
+variables:
+  PHP_IMAGE: "wodby/drupal-php:8.2-dev-4.60.3"
+
+# build
+composer:
+  stage: build
+  image: $PHP_IMAGE
+  script:
+    - git config --global safe.directory '*'
+    - cd drupal && composer install --no-interaction --no-progress --prefer-dist
+
+# lint
+.lint_template: &lint_template
+  stage: validate
+  image: $PHP_IMAGE
+  script:
+    - cd drupal && composer $CI_JOB_NAME
+
+lint_coding_standards:
+  <<: *lint_template
+  variables:
+    CI_JOB_NAME: coding_standards
+
+lint_php_compatibility:
+  <<: *lint_template
+  variables:
+    CI_JOB_NAME: php_compatibility
+
+lint_deprecated_functions:
+  <<: *lint_template
+  variables:
+    CI_JOB_NAME: drupal_check
+
+lint_audit:
+  <<: *lint_template
+  variables:
+    CI_JOB_NAME: audit
+  allow_failure: true
+
+# @todo - #5 Add rector tests.
+# lint_rector:
+#   <<: *lint_template
+#   variables:
+#     CI_JOB_NAME: drupal_rector
+#   allow_failure: true
+
+# test
+.test_template: &test_template
+  stage: test
+  script:
+
+    # add some extra containers for our testing purposes
+    - docker-compose down -v --remove-orphans
+    - cp docker-compose.override-sample.yml docker-compose.override.yml
+    - docker-compose up -d
+    # - docker-compose exec -T php /bin/sh -c "cd /var/www/html/drupal/ && composer install --no-interaction --no-progress --prefer-dist"
+
+    # ensure the 'www-data' user can write to these folders
+    - docker-compose exec -T --user root php mkdir -p drupal/web/sites/simpletest/browser_output/screenshots
+    # - docker-compose exec -T --user root php chown -R www-data:www-data drupal/vendor/squizlabs/php_codesniffer
+    - docker-compose exec -T --user root php chown -R www-data:www-data drupal/web/sites
+    # - docker-compose exec -T --user root php chown -R www-data:www-data docker-init
+    - docker-compose exec -T --user root php chmod -R 02775 drupal/web/sites
+    - docker-compose exec -T --user root php chmod g+s drupal/web/sites/
+
+    # wait for cache
+    - until [ -d drupal/vendor ]; do echo "Waiting for cache..."; sleep 1; done
+
+    # wait for mariadb
+    - docker-compose exec -T php /bin/sh -c "cd /var/www/html/drupal/ && while ! drush sql:query \"SHOW DATABASES;\"; do sleep 5; done"
+
+    # build the site
+    - docker-compose exec -T --user www-data php /bin/sh -c "cd /var/www/html/drupal/ && composer build"
+
+    - docker-compose exec -T --user root php chown -R www-data:www-data drupal/web/sites
+    - docker-compose exec -T --user root php chmod -R 02775 drupal/web/sites/default/files
+    - docker-compose exec -T --user root php chmod g+s drupal/web/sites/default/files
+
+    # run tests
+    # - docker-compose exec -T php /bin/sh -c "cd /var/www/html/drupal/ && composer test"
+
+  after_script:
+    - chown -R root:root drupal/web/sites
+    - git clean -fd drupal/web/sites
+    - docker-compose down -v
+
+  timeout: 20 minutes
+
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v/'
+      when: manual
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+drupal_test:
+  <<: *test_template
+  variables:
+    CI_JOB_NAME: build
+
