@@ -1,4 +1,8 @@
 services:
+  mariadb:
+    volumes:
+      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+
   php:
     environment:
       DB_HOST: $DB_HOST
