@@ -14,9 +14,9 @@ services:
       DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:${PROJECT_PORT}"
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      # - ./:/var/www/html
+      - ./:/var/www/html
       - ./settings.docker.php:/var/www/conf/settings.docker.php #this is included via settings.php
-      - ~/.composer/:/home/wodby/.composer/ #composer cache
+      - ~/.composer/:/home/wodby/cache/.composer/ #composer cache
       - ./docker-init/files/:/mnt/files
 
   crond:
@@ -24,7 +24,7 @@ services:
       CRONTAB: "0 * * * * drush -r ${DRUPAL_ROOT} cron"
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      # - ./:/var/www/html
+      - ./:/var/www/html
       - ./settings.docker.php:/var/www/conf/settings.docker.php #this is included via settings.php
       - ./docker-init/files/:/mnt/files
 
