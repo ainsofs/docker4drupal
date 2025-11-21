@@ -1,5 +1,3 @@
-services:
-  mariadb:
     volumes:
       - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
 
@@ -16,7 +14,7 @@ services:
     volumes:
       - ./:/var/www/html
       - ./settings.docker.php:/var/www/conf/settings.docker.php #this is included via settings.php
-      - ~/.composer/:/home/wodby/cache/.composer/ #composer cache
+      - ~/.cache/composer/:/home/wodby/.cache/composer/ #composer cache
       - ./docker-init/files/:/mnt/files
 
   crond:
