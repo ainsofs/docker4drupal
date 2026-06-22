@@ -1,6 +1,15 @@
 # Enter Project name
 
-Enter project description - This is starter template for drupal 9 development.
+Enter project description -
+
+This is starter template for drupal 11 development. It includes:
+* wodby.yml - wodby pipeline file
+* .gitlab-ci.yml - gitlab cicd
+* build_images - folder for custom containers
+
+Recommended
+
+* Add AGENTS.md file to work with Agentic Coding AI
 
 ## Dev environment with [docker4drupal](https://github.com/wodby/docker4drupal/releases)
 
