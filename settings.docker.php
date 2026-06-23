@@ -1,6 +1,6 @@
 <?php
 
-$settings['config_sync_directory'] = '../config/sync';
+$settings['config_sync_directory'] = '../config/deploy';
 
 $databases['default']['default'] = array(
   'driver' => getenv('DB_DRIVER'),
