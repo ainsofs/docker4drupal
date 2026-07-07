@@ -10,8 +10,11 @@
 /web/profiles/contrib/
 /web/libraries/
 
-# Ignore sensitive information.
+# Include but ensure not to have sensitive infor on it.
 # /web/sites/*/settings.php
+
+# Ignore salt - This is referenced in settings.php
+salt.txt
 
 # Ignore Drupal's file directory.
 /web/sites/*/files/

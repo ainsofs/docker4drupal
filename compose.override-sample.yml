@@ -33,6 +33,15 @@ services:
       NGINX_SERVER_ROOT: ${DRUPAL_ROOT}
     volumes:
       - ./:/var/www/html
+    labels:
+      - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`${PROJECT_BASE_URL}`)"
+      # needed for some version of Docker Desktop.
+      - "traefik.http.services.${PROJECT_NAME}_nginx.loadbalancer.server.port=80"
+
+  # Needed if you want to use DBcode extension to connect to postgres.
+  # postgres:
+  #   ports:
+  #   - "5432:5432"
 
 # volumes:
 #   codebase:
